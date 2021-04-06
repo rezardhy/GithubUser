@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.activity.DetailActivity">
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            style="@style/CodeFont"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/costum_detail"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/child1"
+
+            >
+            <ProgressBar
+
+                android:layout_below="@id/img_detail"
+                android:layout_centerInParent="true"
+                android:id="@+id/progressBarDetail"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_margin="10dp"
+                android:layout_centerHorizontal="true"
+                android:src="@color/black"
+                android:id="@+id/img_detail"
+
+
+                />
+
+            <TextView
+                style="@style/DetailStyle.Placeholder"
+                android:id="@+id/nama_placeholder"
+                android:layout_below="@id/img_detail"
+                android:layout_marginStart="30dp"
+
+                android:text="@string/nama" />
+
+            <TextView
+                style="@style/DetailStyle"
+                android:id="@+id/name_detail"
+                android:layout_below="@id/img_detail"
+                android:layout_toEndOf="@id/nama_placeholder"
+                tools:text="@string/DummyName" />
+
+            <TextView
+                style="@style/DetailStyle.Placeholder"
+                android:id="@+id/location_placeholder"
+                android:layout_below="@id/name_detail"
+                android:layout_marginStart="30dp"
+                android:text="@string/asal"
+                />
+
+            <TextView
+                android:layout_toEndOf="@id/location_placeholder"
+                android:id="@+id/location_detail"
+                android:layout_below="@id/name_detail"
+                style="@style/DetailStyle"
+
+                tools:text="@string/DummyName" />
+
+            <TextView
+                style="@style/DetailStyle.Placeholder"
+                android:id="@+id/company_placeholder"
+                android:layout_below="@id/location_detail"
+                android:layout_marginStart="30dp"
+
+                android:text="@string/perusahaan" />
+
+            <TextView
+                android:layout_toEndOf="@id/company_placeholder"
+                android:id="@+id/company_detail"
+                android:layout_below="@id/location_detail"
+                style="@style/DetailStyle"
+                tools:text="@string/DummyName" />
+
+            <TextView
+                style="@style/DetailStyle.Placeholder"
+                android:id="@+id/repo_placeholder"
+                android:layout_below="@id/company_detail"
+                android:layout_marginStart="30dp"
+                android:text="@string/repo" />
+
+
+            <TextView
+                android:layout_marginBottom="20dp"
+                style="@style/DetailStyle"
+                android:layout_toEndOf="@id/repo_placeholder"
+                android:id="@+id/repo_detail"
+                android:layout_below="@id/company_detail"
+                tools:text="@string/DummyName" />
+
+
+
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabs"
+                app:tabIndicatorColor="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                app:tabTextColor="@android:color/black"/>
+            <androidx.viewpager2.widget.ViewPager2
+                android:layout_below="@id/tabs"
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floating_action_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:backgroundTint="@color/pink1"
+            app:srcCompat="@drawable/favourite_border"
+            android:layout_gravity="bottom|right"
+            app:layout_anchor="@id/tabs"
+            app:layout_anchorGravity="bottom|right|end"
+
+            tools:ignore="RtlHardcoded" />
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+</androidx.core.widget.NestedScrollView>

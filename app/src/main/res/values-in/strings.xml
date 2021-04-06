@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Submission 2 BFAA</string>
+    <string name="DummyName">dummyName</string>
+    <string name="DummyDesc">Dummy desc</string>
+    <string name="search">Cari</string>
+    <string name="search_hint">Masukan Username</string>
+    <string name="tab_text_1">Pengikut</string>
+    <string name="tab_text_2">Mengikuti</string>
+
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="content_tab_following">Following Someone</string>
+    <string name="content_tab_follower">Follower Someone</string>
+    <string name="nama">Nama :</string>
+    <string name="asal">Asal :</string>
+    <string name="perusahaan">Perusahaan :</string>
+    <string name="repo">Repository :</string>
+    <string name="zfolllowing">tidak diikuti siapapun</string>
+    <string name="zfolllower">tidak mengikuti siapapun</string>
+
+
+
+
+    <string name="change_language_settings">Ubah Setelan Bahasa</string>
+</resources>
