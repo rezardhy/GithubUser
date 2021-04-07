@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object{
         private val TAG = MainActivity::class.java.simpleName
+        const val token = "token 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"
     }
 
     private lateinit var binding: ActivityMainBinding
@@ -118,7 +119,7 @@ class MainActivity : AppCompatActivity() {
         binding.progressBar.visibility= View.VISIBLE
         val client = AsyncHttpClient()
         val url = "https://api.github.com/search/users?q=$username"
-        client.addHeader("Authorization","token 5ce5cfd69e0d29e428b993bcce338e412af4e845")
+        client.addHeader("Authorization", token)
         client.addHeader("User-Agent","request")
         client.get(url, object : AsyncHttpResponseHandler() {
             override fun onSuccess(statusCode: Int, headers: Array<Header>, responseBody: ByteArray) {

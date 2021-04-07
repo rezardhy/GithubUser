@@ -14,6 +14,7 @@ internal class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATA
         private const val SQL_CREATE_TABLE_NOTE = "CREATE TABLE $TABLE_NAME" +
                 " (${DatabaseContract.NoteColumns._ID} INTEGER PRIMARY KEY AUTOINCREMENT," +
                 " ${DatabaseContract.NoteColumns.USERNAME_DB} TEXT NOT NULL," +
+                " ${DatabaseContract.NoteColumns.FAVOURITE_DB} INTEGER NOT NULL,"+
                 " ${DatabaseContract.NoteColumns.PHOTO_DB} TEXT NOT NULL)"
     }
 

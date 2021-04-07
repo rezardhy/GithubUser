@@ -22,16 +22,6 @@
             android:id="@+id/child1"
 
             >
-            <ProgressBar
-
-                android:layout_below="@id/img_detail"
-                android:layout_centerInParent="true"
-                android:id="@+id/progressBarDetail"
-                style="?android:attr/progressBarStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
-
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="150dp"
                 android:layout_height="150dp"
@@ -42,11 +32,33 @@
 
 
                 />
+            <ProgressBar
+
+                android:layout_below="@id/nama_placeholder"
+                android:layout_centerInParent="true"
+                android:id="@+id/progressBarDetail"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                />
+
+
+            <Button
+                android:textSize="15sp"
+                android:text="@string/add_to_favourite"
+                android:backgroundTint="@color/pink1"
+                android:layout_centerHorizontal="true"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/img_detail"
+                android:id="@+id/btn_fav"
+                />
 
             <TextView
                 style="@style/DetailStyle.Placeholder"
                 android:id="@+id/nama_placeholder"
-                android:layout_below="@id/img_detail"
+                android:layout_below="@id/btn_fav"
                 android:layout_marginStart="30dp"
 
                 android:text="@string/nama" />
@@ -54,7 +66,7 @@
             <TextView
                 style="@style/DetailStyle"
                 android:id="@+id/name_detail"
-                android:layout_below="@id/img_detail"
+                android:layout_below="@id/btn_fav"
                 android:layout_toEndOf="@id/nama_placeholder"
                 tools:text="@string/DummyName" />
 
@@ -130,18 +142,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </RelativeLayout>
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floating_action_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            app:backgroundTint="@color/pink1"
-            app:srcCompat="@drawable/favourite_border"
-            android:layout_gravity="bottom|right"
-            app:layout_anchor="@id/tabs"
-            app:layout_anchorGravity="bottom|right|end"
-
-            tools:ignore="RtlHardcoded" />
 
     </LinearLayout>
 

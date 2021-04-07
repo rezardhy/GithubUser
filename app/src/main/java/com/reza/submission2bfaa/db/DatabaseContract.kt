@@ -9,6 +9,7 @@ internal class DatabaseContract {
             const val _ID = "_id"
             const val USERNAME_DB = "usesrname"
             const val PHOTO_DB = "photo"
+            const val FAVOURITE_DB = 0
         }
     }
 }

@@ -18,6 +18,8 @@
     <string name="repo">Repository :</string>
     <string name="zfolllowing">Not following anyone</string>
     <string name="zfolllower">Dont have Followers</string>
+    <string name="favourite">Favourite</string>
+    <string name="add_to_favourite">Add to Favourite</string>
 
 
     <string name="change_language_settings">Change Language Settings</string>

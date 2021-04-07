@@ -87,7 +87,7 @@ class DetailActivity : AppCompatActivity() {
         val client = AsyncHttpClient()
         val url = "https://api.github.com/users/$userGetDataAPIDetail"
         //log.d(TAG,userGetDataAPIDetail)
-        client.addHeader("Authorization","token 5ce5cfd69e0d29e428b993bcce338e412af4e845")
+        client.addHeader("Authorization", MainActivity.token)
         client.addHeader("User-Agent","request")
         client.get(url, object : AsyncHttpResponseHandler() {
             override fun onSuccess(statusCode: Int, headers: Array<Header>, responseBody: ByteArray) {
