@@ -1,5 +1,7 @@
 package com.reza.submission2bfaa.ui.activity
 
+import android.annotation.SuppressLint
+import android.content.ContentValues
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -19,12 +21,17 @@ import cz.msebera.android.httpclient.Header
 import org.json.JSONObject
 import java.lang.Exception
 import com.bumptech.glide.request.target.Target
+import com.reza.submission2bfaa.db.DatabaseContract
+import com.reza.submission2bfaa.db.UserHelper
 
-class DetailActivity : AppCompatActivity() {
+class DetailActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding : ActivityDetailBinding
     private lateinit var userData: User
 
+    private var statusFav = false
+    private lateinit var userHelper:UserHelper
+    private lateinit var userFavData:User
 
     private lateinit var  userGit:User
     private lateinit var name1 :String
@@ -52,11 +59,45 @@ class DetailActivity : AppCompatActivity() {
         userData = intent.getParcelableExtra<User>(EXTRA_USER) as User
         val nameOfUser:String = userData.username
 
+        userHelper = UserHelper.getInstance(applicationContext)
+        userHelper.open()
+
         val actionBar = supportActionBar
         actionBar!!.title = nameOfUser
         actionBar.setDisplayHomeAsUpEnabled(true)
         createTab()
         getDataAPIDetail(nameOfUser)
+
+
+        binding.btnFav.setOnClickListener(this)
+
+
+    }
+
+    override fun onClick(v: View?) {
+        if (v?.id == binding.btnFav.id){
+
+
+
+            val values = ContentValues()
+            values.put(DatabaseContract.NoteColumns.USERNAME_DB,username1)
+            values.put(DatabaseContract.NoteColumns.PHOTO_DB,img1)
+            values.put(DatabaseContract.NoteColumns.FAVOURITE_DB,statusFav.toString())
+            if (statusFav== false){
+                val result = userHelper.insert(values)
+                setStatusFav(statusFav)
+
+            }
+
+        }
+    }
+
+    fun setStatusFav(status:Boolean){
+        if (status == false){
+            binding.btnFav.text = "tambah"
+        }
+        else
+            binding.btnFav.text = "hapus"
 
     }
 
@@ -169,6 +210,8 @@ class DetailActivity : AppCompatActivity() {
             .override(Target.SIZE_ORIGINAL)
             .into(binding.imgDetail)
     }
+
+
 
 
 }

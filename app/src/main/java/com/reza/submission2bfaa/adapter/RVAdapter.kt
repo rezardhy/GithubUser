@@ -40,16 +40,25 @@ class RVAdapter(private val listUser: ArrayList<User>): RecyclerView.Adapter<RVA
 
     }
 
+    var listUsers = ArrayList<User>()
+        set(listNotes) {
+            if (listNotes.size > 0) {
+                this.listUsers.clear()
+            }
+            this.listUsers.addAll(listNotes)
+            notifyDataSetChanged()
+        }
+
 
 
 
     fun addItemFav(user: User) {
-        this.listUser.add(user)
+        this.listUsers.add(user)
         notifyItemInserted(this.listUser.size - 1)
     }
 
     fun removeItemFav(position: Int) {
-        this.listUser.removeAt(position)
+        this.listUsers.removeAt(position)
         notifyItemRemoved(position)
         notifyItemRangeChanged(position, this.listUser.size)
     }
