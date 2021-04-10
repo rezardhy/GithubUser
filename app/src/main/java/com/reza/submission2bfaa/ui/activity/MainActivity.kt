@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.rvUser.setHasFixedSize(true)
-        getDataAPI("sidiqp")
+        getDataAPI("rezard")
         searchUsername()
 
     }
