@@ -3,6 +3,7 @@ package com.reza.submission2bfaa.ui.activity
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
@@ -11,6 +12,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.loopj.android.http.AsyncHttpClient
@@ -24,6 +26,7 @@ import cz.msebera.android.httpclient.Header
 import org.json.JSONObject
 import java.lang.Exception
 
+@RequiresApi(Build.VERSION_CODES.M)
 class MainActivity : AppCompatActivity() {
 
     companion object{
@@ -35,6 +38,16 @@ class MainActivity : AppCompatActivity() {
     private val list = ArrayList<User>()
     private lateinit var username1: String
     private lateinit var photo1: String
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.rvUser.setHasFixedSize(true)
+        getDataAPI("sidiqp")
+        searchUsername()
+
+    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.option_menu, menu)
@@ -49,7 +62,6 @@ class MainActivity : AppCompatActivity() {
                 startActivity(mIntent)
             }
             R.id.action_fav_menu -> {
-                Toast.makeText(this, "Fav button", Toast.LENGTH_SHORT).show()
 
                 val i = Intent(this,FavouriteActivity::class.java)
                 startActivity(i)
@@ -57,61 +69,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         return super.onOptionsItemSelected(item)
-    }
-
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        binding.rvUser.setHasFixedSize(true)
-        getDataAPI("sidiqp")
-        searchUsername()
-
-    }
-
-    private fun searchUsername(){
-        val searcManager = getSystemService(Context.SEARCH_SERVICE)as SearchManager
-        val searchView = binding.search
-        searchView.setSearchableInfo(searcManager.getSearchableInfo(componentName))
-        searchView.queryHint = resources.getString(R.string.search_hint)
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(query: String): Boolean {
-                list.clear()
-                getDataAPI(query)
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                return false
-            }
-        })
-
-
-    }
-
-    private fun showRecyclerList() {
-        binding.rvUser.layoutManager = LinearLayoutManager(this)
-        if (list.isEmpty()){
-            Toast.makeText(this@MainActivity, "username tidak ditemukan", Toast.LENGTH_SHORT).show()
-        }
-        else{
-            val listUserAdapter = RVAdapter(list)
-            binding.rvUser.adapter = listUserAdapter
-
-            listUserAdapter.setOnItemClickCallback(object : RVAdapter.OnItemClickCallback{
-                override fun onItemClicked(data: User) {
-                    showSelectedUser(data)
-                }
-            })
-        }
-    }
-
-    private fun showSelectedUser(user: User) {
-        val i = Intent(this, DetailActivity::class.java)
-        i.putExtra(DetailActivity.EXTRA_USER,user)
-        startActivity(i)
     }
 
     private fun getDataAPI(username :String){
@@ -172,6 +129,51 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
+    private fun showRecyclerList() {
+        binding.rvUser.layoutManager = LinearLayoutManager(this)
+        if (list.isEmpty()){
+            Toast.makeText(this@MainActivity, "username tidak ditemukan", Toast.LENGTH_SHORT).show()
+        }
+        else{
+            val listUserAdapter = RVAdapter(list)
+            binding.rvUser.adapter = listUserAdapter
+
+            listUserAdapter.setOnItemClickCallback(object : RVAdapter.OnItemClickCallback{
+                override fun onItemClicked(data: User) {
+                    showSelectedUser(data)
+                }
+            })
+        }
+    }
+
+    private fun searchUsername(){
+        val searcManager = getSystemService(Context.SEARCH_SERVICE)as SearchManager
+        val searchView = binding.search
+        searchView.setSearchableInfo(searcManager.getSearchableInfo(componentName))
+        searchView.queryHint = resources.getString(R.string.search_hint)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String): Boolean {
+                list.clear()
+                getDataAPI(query)
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        })
+
+
+    }
+
+    private fun showSelectedUser(user: User) {
+        val i = Intent(this, DetailActivity::class.java)
+        i.putExtra(DetailActivity.EXTRA_USER,user)
+        startActivity(i)
+    }
+
+
 
 
 }

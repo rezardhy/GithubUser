@@ -22,7 +22,10 @@
 
     <string name="change_language_settings">Change Language Settings</string>
     <string name="splash_text" translatable="false">Submission 2 BFAA by Reza</string>
-    <string name="favourite">Favourite</string>
+    <string name="favourite">Favourite List</string>
+    <string name="removefav">Remove From Favourite</string>
+
     <string name="add_to_favourite">Add to Favourite</string>
+    <string name="favempty">Favourite list Is Empty</string>
 
 </resources>

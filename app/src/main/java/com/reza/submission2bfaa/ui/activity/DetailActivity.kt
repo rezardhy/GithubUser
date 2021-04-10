@@ -1,12 +1,13 @@
 package com.reza.submission2bfaa.ui.activity
 
-import android.annotation.SuppressLint
 import android.content.ContentValues
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DecodeFormat
@@ -23,15 +24,16 @@ import java.lang.Exception
 import com.bumptech.glide.request.target.Target
 import com.reza.submission2bfaa.db.DatabaseContract
 import com.reza.submission2bfaa.db.UserHelper
+import com.reza.submission2bfaa.helper.MappingHelper
 
+@RequiresApi(Build.VERSION_CODES.M)
 class DetailActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding : ActivityDetailBinding
     private lateinit var userData: User
 
-    private var statusFav = false
     private lateinit var userHelper:UserHelper
-    private lateinit var userFavData:User
+    private var isLove = "false"
 
     private lateinit var  userGit:User
     private lateinit var name1 :String
@@ -69,7 +71,31 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
         getDataAPIDetail(nameOfUser)
 
 
+        onCheckFav()
         binding.btnFav.setOnClickListener(this)
+
+
+    }
+
+
+    private fun onCheckFav(){
+
+        val noteHelper = UserHelper.getInstance(applicationContext)
+        noteHelper.open()
+        val cursor = noteHelper.queryById(userData.username)
+        val ans = MappingHelper.mapCursorToArrayList(cursor)
+
+
+        if (ans.isNullOrEmpty()){
+            binding.btnFav.text = getString(R.string.add_to_favourite)
+            binding.btnFav.setBackgroundColor(getColor(R.color.pink1))
+            isLove ="false"
+        }
+        else  {
+            binding.btnFav.text = getString(R.string.removefav)
+            binding.btnFav.setBackgroundColor(getColor(R.color.white))
+            isLove = ans[0].fav.toString()
+        }
 
 
     }
@@ -78,36 +104,33 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
         if (v?.id == binding.btnFav.id){
 
 
+            if (isLove =="true"){
+                binding.btnFav.text = getString(R.string.add_to_favourite)
+                binding.btnFav.setBackgroundColor(getColor(R.color.pink1))
+                userHelper.deleteById(username1)
+                isLove = "false"
 
-            val values = ContentValues()
-            values.put(DatabaseContract.NoteColumns.USERNAME_DB,username1)
-            values.put(DatabaseContract.NoteColumns.PHOTO_DB,img1)
-            values.put(DatabaseContract.NoteColumns.FAVOURITE_DB,statusFav.toString())
-            if (statusFav== false){
-                val result = userHelper.insert(values)
-                setStatusFav(statusFav)
+            }
+
+            else if(isLove=="false"){
+                binding.btnFav.text = getString(R.string.removefav)
+                binding.btnFav.setBackgroundColor(getColor(R.color.white))
+                isLove = "true"
+                val values = ContentValues()
+                values.put(DatabaseContract.NoteColumns.USERNAME_DB,username1)
+                values.put(DatabaseContract.NoteColumns.PHOTO_DB,img1)
+                values.put(DatabaseContract.NoteColumns.FAVOURITE_DB,isLove)
+                userHelper.insert(values)
 
             }
 
         }
     }
 
-    fun setStatusFav(status:Boolean){
-        if (status == false){
-            binding.btnFav.text = "tambah"
-        }
-        else
-            binding.btnFav.text = "hapus"
-
-    }
-
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
-
-
-
 
     private fun createTab(){
         val sectionsPagerAdapter = SectionsPagerAdapter(this,supportFragmentManager)
@@ -127,7 +150,6 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
         binding.progressBarDetail.visibility= View.VISIBLE
         val client = AsyncHttpClient()
         val url = "https://api.github.com/users/$userGetDataAPIDetail"
-        //log.d(TAG,userGetDataAPIDetail)
         client.addHeader("Authorization", MainActivity.token)
         client.addHeader("User-Agent","request")
         client.get(url, object : AsyncHttpResponseHandler() {

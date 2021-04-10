@@ -6,12 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.request.target.Target
-import com.reza.submission2bfaa.model.User
 import com.reza.submission2bfaa.databinding.RvLayoutBinding
+import com.reza.submission2bfaa.model.FavUser
 
-class RVAdapter(private val listUser: ArrayList<User>): RecyclerView.Adapter<RVAdapter.ListViewHolder>() {
-
-
+class FavAdapter(private val favUser: ArrayList<FavUser>):RecyclerView.Adapter<FavAdapter.ListViewHolder>() {
 
     private var onItemClickCallback: OnItemClickCallback? = null
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
@@ -19,38 +17,34 @@ class RVAdapter(private val listUser: ArrayList<User>): RecyclerView.Adapter<RVA
     }
 
     interface OnItemClickCallback {
-        fun onItemClicked(data: User)
+        fun onItemClicked(data: FavUser)
     }
 
-    inner class ListViewHolder(private val binding: RvLayoutBinding ) : RecyclerView.ViewHolder(binding.root) {
+    inner class ListViewHolder(private val binding: RvLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(user: User) {
+        fun bind(favUser: FavUser) {
             with(binding){
                 Glide.with(itemView.context)
-                        .load(user.photo)
+                        .load(favUser.photo)
                         .fitCenter()
                         .format(DecodeFormat.PREFER_ARGB_8888)
                         .override(Target.SIZE_ORIGINAL)
                         .into(imgItemPhoto)
-                tvItemName.text = user.username
-                itemView.setOnClickListener { onItemClickCallback?.onItemClicked(user) }
+                tvItemName.text = favUser.username
+                itemView.setOnClickListener { onItemClickCallback?.onItemClicked(favUser) }
 
-                }
             }
+        }
 
     }
 
-
-
-
-
-    override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ListViewHolder {
-        val binding = RvLayoutBinding.inflate(LayoutInflater.from(viewGroup.context),viewGroup,false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
+        val binding = RvLayoutBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return ListViewHolder(binding)
-
     }
 
-    override fun onBindViewHolder(holder: ListViewHolder, position: Int) = holder.bind(listUser[position])
-    override fun getItemCount(): Int = listUser.size
+    override fun onBindViewHolder(holder: ListViewHolder, position: Int) = holder.bind(favUser[position])
+    override fun getItemCount(): Int = favUser.size
+
 
 }
