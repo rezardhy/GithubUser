@@ -23,27 +23,9 @@ class FavouriteActivity : AppCompatActivity() {
         binding = ActivityFavouriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.rvUser.setHasFixedSize(true)
-        loadNotesAsync()
+        //loadNotesAsync()
 
     }
 
-    private fun loadNotesAsync() {
-        GlobalScope.launch(Dispatchers.Main) {
-            binding.progressBar.visibility = View.VISIBLE
-            val userHelper = UserHelper.getInstance(applicationContext)
-            userHelper.open()
-            val deferredNotes = async(Dispatchers.IO) {
-                val cursor = userHelper.queryAll()
-                MappingHelper.mapCursorToArrayList(cursor)
-            }
-            userHelper.close()
-            binding.progressBar.visibility = View.INVISIBLE
-            val users = deferredNotes.await()
-            if (users.size > 0) {
-                adapter.listUsers = users
-            } else {
-                adapter.listUsers = ArrayList()
-            }
-        }
-    }
+
 }

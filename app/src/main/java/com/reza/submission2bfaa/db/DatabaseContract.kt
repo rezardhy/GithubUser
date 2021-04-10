@@ -7,9 +7,10 @@ internal class DatabaseContract {
         companion object {
             const val TABLE_NAME = "user"
             const val _ID = "_id"
-            const val USERNAME_DB = "usesrname"
+            const val USERNAME_DB = "username"
             const val PHOTO_DB = "photo"
-            const val FAVOURITE_DB = "false"
+            const val FAVOURITE_DB = "favourite"
+
         }
     }
 }
