@@ -13,17 +13,12 @@ import com.reza.submission2bfaa.alarm.AlarmReceiver
 class MyPreferenceFragment : PreferenceFragmentCompat(),
     SharedPreferences.OnSharedPreferenceChangeListener {
 
+    //key switch preferences
     private lateinit var SWITCHKEY: String
     private lateinit var isSwitchPreference: SwitchPreference
 
-    private lateinit var PREFKEY: String
-    private lateinit var isPref : EditTextPreference
-
 
     private lateinit var alarmReceiver: AlarmReceiver
-
-
-
 
     override fun onCreatePreferences(bundle: Bundle?, s: String?) {
         addPreferencesFromResource(R.xml.preferences)
@@ -36,11 +31,6 @@ class MyPreferenceFragment : PreferenceFragmentCompat(),
     private fun init(){
         SWITCHKEY = resources.getString(R.string.switch_key)
         isSwitchPreference = findPreference<SwitchPreference>(SWITCHKEY) as SwitchPreference
-
-        PREFKEY = resources.getString(R.string.languague_key)
-        isPref = findPreference<EditTextPreference>(PREFKEY) as EditTextPreference
-
-
     }
 
     private fun setSummaries() {
@@ -74,7 +64,7 @@ class MyPreferenceFragment : PreferenceFragmentCompat(),
                     Toast.makeText(it,"Alarm On",Toast.LENGTH_SHORT).show()
                     alarmReceiver.setRepeatingAlarm(
                         it, AlarmReceiver.TYPE_REPEATING,
-                        "20:15", "Ayo Kembali Produktif")
+                        "09:00", "Ayo Kembali Produktif")
                 }
 
             }
@@ -86,9 +76,6 @@ class MyPreferenceFragment : PreferenceFragmentCompat(),
             }
         }
 
-        if (key == PREFKEY){
-            val i = Intent(Settings.ACTION_LOCALE_SETTINGS)
-            startActivity(i)
-        }
+
     }
 }
