@@ -26,12 +26,11 @@ import cz.msebera.android.httpclient.Header
 import org.json.JSONObject
 import java.lang.Exception
 
-@RequiresApi(Build.VERSION_CODES.M)
 class MainActivity : AppCompatActivity() {
 
     companion object{
         private val TAG = MainActivity::class.java.simpleName
-        const val token = "token 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"
+        const val token = "token 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"
     }
 
     private lateinit var binding: ActivityMainBinding
@@ -58,8 +57,8 @@ class MainActivity : AppCompatActivity() {
 
         when(item.itemId){
             R.id.action_change_settings->{
-                val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
-                startActivity(mIntent)
+                val i = Intent(this,SettingsActivity::class.java)
+                startActivity(i)
             }
             R.id.action_fav_menu -> {
 

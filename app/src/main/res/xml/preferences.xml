@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+
+    <SwitchPreference
+        android:key="@string/switch_key"
+        android:summary="@string/daily_reminder"
+        app:iconSpaceReserved="false"
+        android:defaultValue="false"
+        />
+    <EditTextPreference
+        android:singleLine="true"
+        android:defaultValue="false"
+        android:key="@string/languague_key"
+        android:summary="@string/change_language_settings"
+        android:iconSpaceReserved="false"
+        />
+
+
+
+
+</androidx.preference.PreferenceScreen >

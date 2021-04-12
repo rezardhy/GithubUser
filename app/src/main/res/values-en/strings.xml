@@ -25,4 +25,8 @@
     <string name="change_language_settings">Change Language Settings</string>
     <string name="removefav">Remove From Favourite</string>
     <string name="favempty">Favourite list Is Empty</string>
+    <string name="switch_key">switch_key</string>
+    <string name="daily_reminder">Daily Reminder at 9 am</string>
+    <string name="languague_key">language_key</string>
+    <string name="settings">Settings</string>
 </resources>

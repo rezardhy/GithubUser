@@ -26,7 +26,6 @@ import com.reza.submission2bfaa.db.DatabaseContract
 import com.reza.submission2bfaa.db.UserHelper
 import com.reza.submission2bfaa.helper.MappingHelper
 
-@RequiresApi(Build.VERSION_CODES.M)
 class DetailActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding : ActivityDetailBinding
@@ -88,12 +87,16 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
 
         if (ans.isNullOrEmpty()){
             binding.btnFav.text = getString(R.string.add_to_favourite)
-            binding.btnFav.setBackgroundColor(getColor(R.color.pink1))
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                binding.btnFav.setBackgroundColor(getColor(R.color.pink1))
+            }
             isLove ="false"
         }
         else  {
             binding.btnFav.text = getString(R.string.removefav)
-            binding.btnFav.setBackgroundColor(getColor(R.color.white))
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                binding.btnFav.setBackgroundColor(getColor(R.color.white))
+            }
             isLove = ans[0].fav.toString()
         }
 
@@ -106,7 +109,9 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
 
             if (isLove =="true"){
                 binding.btnFav.text = getString(R.string.add_to_favourite)
-                binding.btnFav.setBackgroundColor(getColor(R.color.pink1))
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                    binding.btnFav.setBackgroundColor(getColor(R.color.pink1))
+                }
                 userHelper.deleteById(username1)
                 isLove = "false"
 
@@ -114,7 +119,9 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
 
             else if(isLove=="false"){
                 binding.btnFav.text = getString(R.string.removefav)
-                binding.btnFav.setBackgroundColor(getColor(R.color.white))
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                    binding.btnFav.setBackgroundColor(getColor(R.color.white))
+                }
                 isLove = "true"
                 val values = ContentValues()
                 values.put(DatabaseContract.NoteColumns.USERNAME_DB,username1)
@@ -219,11 +226,12 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun showDataUser(user1:User){
-        binding.nameDetail.text = user1.name
-        binding.companyDetail.text =user1.company
-        binding.repoDetail.text= user1.repo
-        binding.locationDetail.text = user1.location
-
+        binding.apply{
+            nameDetail.text = user1.name
+            companyDetail.text =user1.company
+            repoDetail.text= user1.repo
+            locationDetail.text = user1.location
+        }
 
         Glide.with(this)
             .load(user1.photo)
@@ -232,8 +240,5 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
             .override(Target.SIZE_ORIGINAL)
             .into(binding.imgDetail)
     }
-
-
-
 
 }
