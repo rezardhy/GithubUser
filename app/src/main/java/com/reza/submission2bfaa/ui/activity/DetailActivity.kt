@@ -1,13 +1,13 @@
 package com.reza.submission2bfaa.ui.activity
 
 import android.content.ContentValues
+import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DecodeFormat
@@ -23,8 +23,13 @@ import org.json.JSONObject
 import java.lang.Exception
 import com.bumptech.glide.request.target.Target
 import com.reza.submission2bfaa.db.DatabaseContract
+import com.reza.submission2bfaa.db.DatabaseContract.NoteColumns.Companion.CONTENT_URI
+import com.reza.submission2bfaa.db.DatabaseContract.NoteColumns.Companion.FAVOURITE_DB
+import com.reza.submission2bfaa.db.DatabaseContract.NoteColumns.Companion.PHOTO_DB
+import com.reza.submission2bfaa.db.DatabaseContract.NoteColumns.Companion.USERNAME_DB
 import com.reza.submission2bfaa.db.UserHelper
 import com.reza.submission2bfaa.helper.MappingHelper
+import com.reza.submission2bfaa.model.FavUser
 
 class DetailActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -41,6 +46,9 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var company1: String
     private lateinit var location1: String
     private lateinit var repo1: String
+
+    private lateinit var uriWithId: Uri
+
 
 
     companion object {
@@ -63,12 +71,19 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
         userHelper = UserHelper.getInstance(applicationContext)
         userHelper.open()
 
+
+        uriWithId = Uri.parse(CONTENT_URI.toString() + "/" + nameOfUser)
+
+
         val actionBar = supportActionBar
         actionBar!!.title = nameOfUser
         actionBar.setDisplayHomeAsUpEnabled(true)
         createTab()
+        binding.btnFav.visibility = View.INVISIBLE
         getDataAPIDetail(nameOfUser)
 
+        uriWithId = Uri.parse(CONTENT_URI.toString()+"/"+ USERNAME_DB+ "/" + nameOfUser)
+        Log.d("uri",uriWithId.toString())
 
         onCheckFav()
         binding.btnFav.setOnClickListener(this)
@@ -79,11 +94,10 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun onCheckFav(){
 
-        val noteHelper = UserHelper.getInstance(applicationContext)
+        /*val noteHelper = UserHelper.getInstance(applicationContext)
         noteHelper.open()
         val cursor = noteHelper.queryById(userData.username)
         val ans = MappingHelper.mapCursorToArrayList(cursor)
-
 
         if (ans.isNullOrEmpty()){
             binding.btnFav.text = getString(R.string.add_to_favourite)
@@ -98,21 +112,45 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
                 binding.btnFav.setBackgroundColor(getColor(R.color.white))
             }
             isLove = ans[0].fav.toString()
-        }
+        }*/
+
+
+      val cursor = contentResolver.query(uriWithId, null, null, null, null)
+
+
+      if (cursor == null) {
+
+          binding.btnFav.text = getString(R.string.add_to_favourite)
+          if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+              binding.btnFav.setBackgroundColor(getColor(R.color.pink1))
+          }
+          isLove ="false"
+      }
+      else{
+          binding.btnFav.text = getString(R.string.removefav)
+          if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+              binding.btnFav.setBackgroundColor(getColor(R.color.white))
+          }
+          isLove = "true"
+
+          cursor.close()
+
+      }
 
 
     }
 
     override fun onClick(v: View?) {
         if (v?.id == binding.btnFav.id){
-
-
             if (isLove =="true"){
                 binding.btnFav.text = getString(R.string.add_to_favourite)
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                     binding.btnFav.setBackgroundColor(getColor(R.color.pink1))
                 }
-                userHelper.deleteById(username1)
+
+                Log.d("delete",uriWithId.toString())
+                //userHelper.deleteById(username1)
+                contentResolver.delete(uriWithId, null, null)
                 isLove = "false"
 
             }
@@ -122,12 +160,14 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                     binding.btnFav.setBackgroundColor(getColor(R.color.white))
                 }
+
                 isLove = "true"
                 val values = ContentValues()
-                values.put(DatabaseContract.NoteColumns.USERNAME_DB,username1)
-                values.put(DatabaseContract.NoteColumns.PHOTO_DB,img1)
-                values.put(DatabaseContract.NoteColumns.FAVOURITE_DB,isLove)
-                userHelper.insert(values)
+                values.put(USERNAME_DB,username1)
+                values.put(PHOTO_DB,img1)
+                values.put(FAVOURITE_DB,isLove)
+                //userHelper.insert(values)
+                contentResolver.insert(CONTENT_URI,values)
 
             }
 
@@ -200,6 +240,7 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
                         repo = repo1
                     )
 
+                    binding.btnFav.visibility=View.VISIBLE
 
                 }catch (e : Exception){
                     Toast.makeText(this@DetailActivity, e.message, Toast.LENGTH_SHORT).show()

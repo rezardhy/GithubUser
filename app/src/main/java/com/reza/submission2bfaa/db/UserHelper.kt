@@ -4,9 +4,10 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import android.util.Log
 import com.reza.submission2bfaa.db.DatabaseContract.NoteColumns.Companion.TABLE_NAME
 import com.reza.submission2bfaa.db.DatabaseContract.NoteColumns.Companion.USERNAME_DB
-import com.reza.submission2bfaa.db.DatabaseContract.NoteColumns.Companion._ID
+//import com.reza.submission2bfaa.db.DatabaseContract.NoteColumns.Companion._ID
 import java.sql.SQLException
 
 class UserHelper(context: Context) {
@@ -61,7 +62,7 @@ class UserHelper(context: Context) {
             null,
             null,
             null,
-            "$_ID ASC")
+            null)
     }
 
     fun insert(values: ContentValues?): Long {
@@ -69,6 +70,7 @@ class UserHelper(context: Context) {
     }
 
     fun deleteById(username: String): Int {
+        Log.d("fromhelper",username)
         return database.delete(DATABASE_TABLE, "$USERNAME_DB = '$username'", null)
     }
 

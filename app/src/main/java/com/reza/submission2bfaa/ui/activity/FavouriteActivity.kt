@@ -1,9 +1,11 @@
 package com.reza.submission2bfaa.ui.activity
 
 import android.content.Intent
+import android.database.ContentObserver
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.HandlerThread
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,6 +13,7 @@ import com.reza.submission2bfaa.R
 import com.reza.submission2bfaa.adapter.FavAdapter
 import com.reza.submission2bfaa.adapter.RVAdapter
 import com.reza.submission2bfaa.databinding.ActivityFavouriteBinding
+import com.reza.submission2bfaa.db.DatabaseContract
 import com.reza.submission2bfaa.db.UserHelper
 import com.reza.submission2bfaa.helper.MappingHelper
 import com.reza.submission2bfaa.model.FavUser
@@ -28,6 +31,7 @@ class FavouriteActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.rvFavUser.setHasFixedSize(true)
         showFavUser()
+
 
         val actionBar = supportActionBar
         actionBar!!.title = getString(R.string.favourite)
@@ -47,7 +51,8 @@ class FavouriteActivity : AppCompatActivity() {
         binding.progressBar.visibility = View.VISIBLE
         var userHelper = UserHelper.getInstance(applicationContext)
         userHelper.open()
-        val cursor = userHelper.queryAll()
+        val cursor = contentResolver.query(DatabaseContract.NoteColumns.CONTENT_URI, null, null, null, null)
+        //val cursor = userHelper.queryAll()
         val users = MappingHelper.mapCursorToArrayList(cursor)
         binding.progressBar.visibility = View.INVISIBLE
         if (users.size > 0) {

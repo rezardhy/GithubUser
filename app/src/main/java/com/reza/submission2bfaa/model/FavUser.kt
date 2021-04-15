@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class FavUser (
-    val id:Int = 0,
+    val id :Int = 0,
     val username:String?=null,
     val photo:String?=null,
     val fav:String?=null
