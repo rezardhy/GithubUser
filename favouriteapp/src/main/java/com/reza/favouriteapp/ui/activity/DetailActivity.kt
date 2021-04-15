@@ -14,19 +14,19 @@ import com.bumptech.glide.load.DecodeFormat
 import com.google.android.material.tabs.TabLayoutMediator
 import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.AsyncHttpResponseHandler
-import com.reza.submission2bfaa.R
-import com.reza.submission2bfaa.adapter.SectionsPagerAdapter
-import com.reza.submission2bfaa.model.User
-import com.reza.submission2bfaa.databinding.ActivityDetailBinding
+import com.reza.favouriteapp.R
+import com.reza.favouriteapp.adapter.SectionsPagerAdapter
+import com.reza.favouriteapp.model.User
+import com.reza.favouriteapp.databinding.ActivityDetailBinding
 import cz.msebera.android.httpclient.Header
 import org.json.JSONObject
 import java.lang.Exception
 import com.bumptech.glide.request.target.Target
-import com.reza.submission2bfaa.db.DatabaseContract.NoteColumns.Companion.CONTENT_URI
-import com.reza.submission2bfaa.db.DatabaseContract.NoteColumns.Companion.FAVOURITE_DB
-import com.reza.submission2bfaa.db.DatabaseContract.NoteColumns.Companion.PHOTO_DB
-import com.reza.submission2bfaa.db.DatabaseContract.NoteColumns.Companion.USERNAME_DB
-import com.reza.submission2bfaa.db.UserHelper
+import com.reza.favouriteapp.db.DatabaseContract.NoteColumns.Companion.CONTENT_URI
+import com.reza.favouriteapp.db.DatabaseContract.NoteColumns.Companion.FAVOURITE_DB
+import com.reza.favouriteapp.db.DatabaseContract.NoteColumns.Companion.PHOTO_DB
+import com.reza.favouriteapp.db.DatabaseContract.NoteColumns.Companion.USERNAME_DB
+import com.reza.favouriteapp.db.UserHelper
 
 
 class DetailActivity : AppCompatActivity(), View.OnClickListener {

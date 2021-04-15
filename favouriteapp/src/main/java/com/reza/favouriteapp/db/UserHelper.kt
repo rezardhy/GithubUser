@@ -7,8 +7,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.util.Log
 import com.reza.submission2bfaa.db.DatabaseContract.NoteColumns.Companion.TABLE_NAME
 import com.reza.submission2bfaa.db.DatabaseContract.NoteColumns.Companion.USERNAME_DB
-
-
+//import com.reza.submission2bfaa.db.DatabaseContract.NoteColumns.Companion._ID
 import java.sql.SQLException
 
 class UserHelper(context: Context) {
